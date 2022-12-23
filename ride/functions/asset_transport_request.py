@@ -9,9 +9,9 @@ class Requester:
     @classmethod
     def create(cls, request: schemas.AssetTransport, db: Session):
 
-        valid_assets = db.query(models.AssetType).all()
-        valid_sensitivities = db.query(models.Sensitivity).all()
-
+        valid_assets = [record.asset_type for record in db.query(models.AssetType).all()]
+        valid_sensitivities = [record.sensitivity for record in db.query(models.Sensitivity).all()]
+        
         if request.asset_type not in valid_assets or request.asset_sensitivity not in valid_sensitivities:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                                 detail=f'either of asset_type or asset_sensitivity is not valid')

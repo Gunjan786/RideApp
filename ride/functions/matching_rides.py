@@ -9,7 +9,7 @@ class MatchRides:
     def get_rides(cls, requester_id: int, db: Session, page: int, limit: int):
         matching_rides = MatchRides.create_matching_rides(requester_id, db)
         offset_page = page - 1
-        return matching_rides[offset_page:limit] if limit != -1 else matching_rides
+        return matching_rides[offset_page:limit+offset_page] if limit != -1 else matching_rides
 
     @classmethod
     def create_matching_rides(cls, requester_id: int, db: Session):
