@@ -31,7 +31,9 @@ class MatchRides:
                 # check if required details matches of rider and requester and it doesn't already exists in table
                 if ride.to_address == requester.to_address \
                 and ride.from_address == requester.from_address \
-                and ride.date_time.date()==requester.date_time.date() and ride.id not in matched_riders:
+                and ride.date_time.date()==requester.date_time.date() \
+                and ride.assets_quantity >= requester.assets_quantity \
+                and ride.id not in matched_riders:
 
                     matched_riders.append(ride.id)
                     # create a new record for new match
