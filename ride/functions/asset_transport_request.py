@@ -1,13 +1,21 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import select
 from ride import models, schemas
-
-from sqlalchemy import text, column
+from fastapi import HTTPException, status
+from sqlalchemy import text
 from sqlalchemy.sql import select
 
 class Requester:
     @classmethod
     def create(cls, request: schemas.AssetTransport, db: Session):
+
+        valid_assets = db.query(models.AssetType).all()
+        valid_sensitivities = db.query(models.Sensitivity).all()
+
+        if request.asset_type not in valid_assets or request.asset_sensitivity not in valid_sensitivities:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail=f'either of asset_type or asset_sensitivity is not valid')
+
         new_order_request = models.TransportRequest(
             from_address=request.from_address,
             to_address=request.to_address,
