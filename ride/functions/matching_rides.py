@@ -1,6 +1,6 @@
-from fastapi import HTTPException, status
-from ride import schemas, models
+from ride import models
 from sqlalchemy.orm import Session
+from datetime import datetime
 
 
 class MatchRides:
@@ -31,8 +31,10 @@ class MatchRides:
                 # check if required details matches of rider and requester and it doesn't already exists in table
                 if ride.to_address == requester.to_address \
                 and ride.from_address == requester.from_address \
-                and ride.date_time.date()==requester.date_time.date() \
-                and ride.assets_quantity >= requester.assets_quantity \
+                and (ride.date_time.date() == requester.date_time.date() \
+                or ride.date_time == datetime.min \
+                or requester.date_time == datetime.min) \
+                and ride.assets_quantity >= requester.no_of_assets \
                 and ride.id not in matched_riders:
 
                     matched_riders.append(ride.id)

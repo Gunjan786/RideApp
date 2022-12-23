@@ -51,7 +51,8 @@ class Requester:
 
         offset_page = page - 1
         # pagination
-        query = (query.offset(offset_page * limit).limit(limit))
+        if limit != -1:
+            query = (query.offset(offset_page * limit).limit(limit))
 
         #execute final query
         result = (db.execute(query)).fetchall()

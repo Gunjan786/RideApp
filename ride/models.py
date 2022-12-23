@@ -28,7 +28,6 @@ class TransportRequest(Base):
     asset_sensitivity = Column(String)
     whom_to_deliever = Column(String)
     status = Column(String, default='pending')
-    rides = Column(String, default='NOT APPLIED')
 
 class RiderDetails(Base):
     __tablename__ = 'rider_details'

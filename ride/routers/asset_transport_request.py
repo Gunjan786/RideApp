@@ -18,7 +18,7 @@ def place_asset_transport_request(request: schemas.AssetTransport, db: Session =
 @router.get('', response_model=schemas.PageResponse)
 def get_asset_transport_requests(db: Session = Depends(get_db), 
     page: int = 1,
-    limit: int = 10,
+    limit: int = -1,
     sort: str = None,
     filter: str = None):
     return asset_transport_request.Requester.get_all_requests(db, page, limit, sort, filter)

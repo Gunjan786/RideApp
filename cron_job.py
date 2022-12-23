@@ -4,7 +4,8 @@ def update_expired_dates():
     '''
     it updates requester status to expired when it is not flexible timing and time is expired
     '''
-    conn = sqlite3.connect("C:/NxtWave_Assessment/Let's_Ride/app/blog.db")
+    # give path of blog.db file to connect with db
+    conn = sqlite3.connect("C:/Users/gunja/RideApp/blog.db")
     query = """UPDATE transport_requests 
                SET status = 'retired' 
                WHERE date_time < DATETIME() 

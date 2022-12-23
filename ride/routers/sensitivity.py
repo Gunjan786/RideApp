@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends
-from ride import database, models, schemas
+from fastapi import APIRouter, Depends, status
+from ride import database, schemas
 from ride.functions import sensitivity
 from sqlalchemy.orm import Session
 from typing import List
@@ -11,7 +11,7 @@ router = APIRouter(
 
 get_db = database.get_db
 
-@router.post('', response_model=schemas.Sensitivities)
+@router.post('', response_model=schemas.Sensitivities, status_code=status.HTTP_201_CREATED)
 def create_sens(request : schemas.CreateSensitivities, db : Session = Depends(get_db)):
     return sensitivity.Sensitivity.create(request, db)
 
